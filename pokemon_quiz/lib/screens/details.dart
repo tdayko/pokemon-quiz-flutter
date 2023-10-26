@@ -22,7 +22,6 @@ class DetailsScreen extends StatelessWidget {
           children: [
             DetailImage(pokemon: pokemon),
             DetailTitle(pokemon: pokemon),
-            DetailData(pokemon: pokemon),
           ],
         ),
       ),
