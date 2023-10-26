@@ -9,15 +9,15 @@ class DetailImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       constraints: const BoxConstraints(
-        maxHeight: 500,
+        maxHeight: 350,
       ),
       color: Colors.black,
       child: Center(
           child: Stack(
         children: [
           Container(
-            height: 500,
-            width: 500,
+            height: 400,
+            width: 400,
             decoration: const BoxDecoration(
               color: Colors.white10,
               shape: BoxShape.circle,

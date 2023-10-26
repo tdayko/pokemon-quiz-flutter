@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pokedex/models/pokemon.dart';
 import 'package:pokedex/utils/string_extension.dart';
@@ -11,19 +12,17 @@ class DetailTitle extends StatelessWidget {
     return Material(
       color: Colors.white,
       type: MaterialType.transparency,
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-        Radius.circular(21),
-      )),
+      shape: const RoundedRectangleBorder(),
       child: Chip(
           backgroundColor: Colors.white,
           avatar: CircleAvatar(
-            child: Text(pokemon.id.toString()),
+            child: Text('1' as String),
           ),
-          label: Text(
+          label: Padding(padding: EdgeInsets.symmetric(horizontal: 10.0))
+          Text(
             pokemon.name.capitalize(),
             style: const TextStyle(
-              fontSize: 24,
+              fontSize: 45,
               color: Colors.black,
             ),
           )),
