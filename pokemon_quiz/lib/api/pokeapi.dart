@@ -23,3 +23,4 @@ class PokeAPI {
     return pokemonList;
   }
 }
+
