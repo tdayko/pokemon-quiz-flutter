@@ -2,8 +2,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:pokedex/api/pokeapi.dart';
 import 'package:pokedex/models/pokemon.dart';
-import 'package:pokedex/widgets/pokemon_questions.dart';
 import 'package:pokedex/widgets/pokemon_image.dart';
+import 'package:pokedex/widgets/pokemon_question.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -14,7 +14,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   Pokemon? _correctPokemon;
-  List<Pokemon> _notCorrectPokemons = []; 
+  List<Pokemon> _notCorrectPokemons = [];
+  int _correctAnswers = 0;
+  int _totalAttempts = 0;
 
   @override
   void initState() {
@@ -39,6 +41,51 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void _handleAnswerSelected(bool isCorrect) {
+    setState(() {
+      _totalAttempts++;
+      if (isCorrect) {
+        _correctAnswers++;
+      }
+
+      if (_totalAttempts >= 10) {
+        // Mostre o resultado e o botão de reiniciar
+        _showResultDialog();
+      } else {
+        _loadPokemon();
+      }
+    });
+  }
+
+  void _showResultDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Resultado'),
+          content: Text('Acertos: $_correctAnswers / 10'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                _resetGame();
+                Navigator.of(context).pop();
+              },
+              child: const Text('Reiniciar'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _resetGame() {
+    setState(() {
+      _correctAnswers = 0;
+      _totalAttempts = 0;
+    });
+    _loadPokemon();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,9 +94,12 @@ class _HomeScreenState extends State<HomeScreen> {
         physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
-            if (_correctPokemon != null) PokemonImage(pokemon: _correctPokemon!),
+            Text('Tentativas: $_totalAttempts / 10'),
+            Text('Acertos: $_correctAnswers'),
             if (_correctPokemon != null)
-              PokemonQuiz( 
+              PokemonImage(pokemon: _correctPokemon!),
+            if (_correctPokemon != null)
+              PokemonQuiz(
                 correctPokemon: _correctPokemon!,
                 incorrectPokemons: _notCorrectPokemons,
                 onAnswerSelected: _handleAnswerSelected,
@@ -58,9 +108,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
-  }
-
-  void _handleAnswerSelected(bool isCorrect) {
-    _loadPokemon();
   }
 }
