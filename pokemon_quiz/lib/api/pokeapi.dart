@@ -1,15 +1,8 @@
 import 'package:pokedex/models/pokemon.dart';
-import 'package:pokedex/models/pokemon_data.dart';
 import 'package:pokedex/services/api.dart';
 import 'package:pokedex/utils/constants.dart';
 
 class PokeAPI {
-  static Future<PokemonData> getPokemonData(String pokemonUrl) async {
-    final jsonData = await Api.getData(pokemonUrl);
-
-    return PokemonData.fromJson(jsonData);
-  }
-
   static Future<List<Pokemon>> getPokemonList({int? limit, int? offset}) async {
     limit ??= 150;
     offset ??= 0;

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/models/pokemon.dart';
 
-class DetailImage extends StatelessWidget {
-  const DetailImage({required this.pokemon, super.key});
+class PokemonImage extends StatelessWidget {
+  const PokemonImage({required this.pokemon, super.key});
   final Pokemon pokemon;
 
   @override
